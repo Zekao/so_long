@@ -1,4 +1,5 @@
-#include "mlx.h"
+#include "mlx.h" 
+#include "so_long.h"
 #include <stdlib.h>
 #include <stdio.h>
 
