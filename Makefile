@@ -4,7 +4,7 @@ INC =	include
 
 SRCS =	srcs/main.c 		\
 
-MLX = mlx_linux
+MLX = /usr/local/lib/
 
 OBJS = ${SRCS:.c=.o}
 
@@ -13,16 +13,15 @@ CC = gcc
 RM = rm -f
 
 CFLAGS = -g 
-FLAGS_MLX=-L/usr/lib -lXext -lX11 -lm
+FLAGS_MLX= -lmlx -framework OpenGl -framework Appkit
 
 all: $(NAME)
 
 %.o:  %.c
 	$(CC) $(CFLAGS) $< -I$(INC) -c -o $@
 
-$(NAME) : $(OBJS) 
-	-make -C mlx_linux
-	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux $(FLAGS_MLX) -Imlx_linux -o $(NAME) 
+$(NAME) : $(OBJS)
+	$(CC) $(OBJS) $(FLAGS_MLX) -o $(NAME) 
 
 clean :
 	$(RM) $(OBJS)
