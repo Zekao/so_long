@@ -23,7 +23,7 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y)
 	a = 0;
 	b = 0;
 	i = -1;
-	map.wall = mlx_xpm_file_to_image(mlx, "imgs/map-32.xpm", &a, &b);
+	map.wall = mlx_xpm_file_to_image(mlx, "imgs/wall.xpm", &a, &b);
 	map.bg = mlx_xpm_file_to_image(mlx, "imgs/grass.xpm", &a, &b);
 	while (++i < y) //GAUCHE ET DROITE
 	{
@@ -56,12 +56,20 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y)
 
 int	ft_close(int keycode, t_img *vars)
 {
+	x_size = ft_get_character_x(map);
+	y_size = ft_get_character_y(map);
+	
 	printf ("keycode : %d\n", keycode);
 	if (keycode == 53 || keycode < 0)
 	{
 		mlx_destroy_image(vars->mlx, vars->character);
 		mlx_destroy_window(vars->mlx, vars->win);
 		exit(0);
+	}
+	if (keycode == 2)
+	{	
+		mlx_destroy_image(vars->mlx, vars->character);
+		mlx_put_image_to_window(img.mlx, img.win, img.character, calc1++, calc2);
 	}
 	return (0);
 }
@@ -76,23 +84,24 @@ int	ft_close_cross(t_img *vars)
 
 void    init_img(char **map)
 {
-	int     x_size;
-	int     y_size;
+	int		x_size;
+	int		y_size;
 	int		x;
 	int		y;
 	t_img	img;
 
 	x = ft_strlen(map[1]);
 	y = ft_strstrsize(map);
-	x_size = 8;
-	y_size = 8;
-	// x_pos = 96;
-	// y_pos = 96;
+	x_size = ft_get_character_x(map);
+	y_size = ft_get_character_y(map);
+
+	int	calc1 = (x_size % x * 64);
+	int	calc2 = (y_size % y * 64);
 	img.mlx = mlx_init();
-	img.character = mlx_xpm_file_to_image(img.mlx, "imgs/movement-1.xpm", &x_size, &y_size);
+	img.character = mlx_xpm_file_to_image(img.mlx, "imgs/character.xpm", &x_size, &y_size);
 	img.win = mlx_new_window(img.mlx, x * 64, y * 64, "So_long");
 	put_surrounding(img.mlx, img.win, x, y);
-	mlx_put_image_to_window(img.mlx, img.win, img.character, x, y);
+	mlx_put_image_to_window(img.mlx, img.win, img.character, calc1, calc2);
 	mlx_hook(img.win, 2, 1L<<0, ft_close, &img);
 	mlx_hook(img.win, 17, 0L, ft_close_cross, &img);
 		mlx_loop(img.mlx);
@@ -101,9 +110,9 @@ void    init_img(char **map)
 int     main(int argc, char **argv)
 {
 	char	**map;
-	char	*str;
 	int	i;
 
+	(void)argc;
 	i = 0;
 	map = ft_fill_map(argv[1]);
 	if(!ft_map_parse(map) || !ft_check_map_objects(map) || !ft_namecheck(argv[1]))

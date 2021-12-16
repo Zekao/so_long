@@ -20,7 +20,7 @@ CC = gcc
 
 RM = rm -f
 
-CFLAGS = -g 
+CFLAGS = -Wall -Werror -Wextra 
 FLAGS_MLX= -lmlx -framework OpenGl -framework Appkit
 
 all: $(NAME)
@@ -35,7 +35,7 @@ clean :
 	$(RM) $(OBJS)
 
 fclean : clean
-	-make clean -C mlx_linux 
+	-make clean 
 	$(RM) $(NAME)
 
 re : fclean all

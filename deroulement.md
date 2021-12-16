@@ -7,16 +7,19 @@
 2 - Regles de touches :
     - ECHAP ferme la fenetre -> OK
     - Pouvoir se deplacer avec WASD -> TODO
-    - Pouvoir fermer le programme avec la croix -> TODO -> LATER
+    - Pouvoir fermer le programme avec la croix -> OK
     - 
     -
     -
     -
 3   -  Calculer la taille de ma map : 
-    - Taille d'une ligne * nombre de lignes -> TODO
+    - Taille d'une ligne * nombre de lignes -> OK
 4  -  Restrictions du jeu : 
     - Faire en sorte de faire bouger le personnage avec mes inputs WASD -> TODO
     - Le personnage ne peux pas rentrer dans les murs -> TODO
+    - Changer la position de base de mon personnage en fonction du P -> TODO
     - 
     Comment faire les actions : 
     - Sur chaque Key, je clear ma window puis je deplace mon personnage de 1 case
+5 - KEYCODES MAC :
+    - A = 0 , D = 2 , S = 1 , W = 13

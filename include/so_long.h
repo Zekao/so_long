@@ -10,8 +10,11 @@ typedef	struct s_img
 	void	*mlx;
 	void	*win;
 	void	*character;
-}	t_img;
+	void	*collectible;
+	void	*exit;
 
+}	t_img;
+ 
 typedef	struct s_maps
 {
 	void	*wall;
@@ -27,6 +30,7 @@ int	ft_strstrsize(char **str);
 char	**ft_fill_map(char *argv);
 int ft_get_character_x(char **map);
 int ft_get_character_y(char **map);
+int	ft_map_parse(char **map);
 /*												*/
-
+size_t	ft_strlen(char const *str);
 #endif
