@@ -17,14 +17,14 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y)
 	int     i;
 	int     a;
 	int     b;
-	int     pix = 32;
+	int     pix = 64;
 		t_maps	map;
 
 	a = 0;
 	b = 0;
 	i = -1;
 	map.wall = mlx_xpm_file_to_image(mlx, "imgs/map-32.xpm", &a, &b);
-	map.bg = mlx_xpm_file_to_image(mlx, "imgs/map2-32.xpm", &a, &b);
+	map.bg = mlx_xpm_file_to_image(mlx, "imgs/grass.xpm", &a, &b);
 	while (++i < y) //GAUCHE ET DROITE
 	{
 		mlx_put_image_to_window(mlx, mlx_win, map.wall, 0, pix * i);//cote gauche
@@ -54,10 +54,10 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y)
 		}
 }
 
-int	close(int keycode, t_vars *vars)
+int	ft_close(int keycode, t_img *vars)
 {
 	printf ("keycode : %d\n", keycode);
-	if (keycode == 53)
+	if (keycode == 53 || keycode < 0)
 	{
 		mlx_destroy_image(vars->mlx, vars->character);
 		mlx_destroy_window(vars->mlx, vars->win);
@@ -65,34 +65,48 @@ int	close(int keycode, t_vars *vars)
 	}
 	return (0);
 }
-void    init_img(void)
+
+int	ft_close_cross(t_img *vars)
 {
-	int     a;
-	int     b;
+	mlx_destroy_image(vars->mlx, vars->character);
+	mlx_destroy_window(vars->mlx, vars->win);
+	printf("you have clicked on the red cross.\n");
+	exit(0);
+}
+
+void    init_img(char **map)
+{
+	int     x_size;
+	int     y_size;
+	int		x;
+	int		y;
 	t_img	img;
 
-	a = 96;
-	b = 96;
+	x = ft_strlen(map[1]);
+	y = ft_strstrsize(map);
+	x_size = 8;
+	y_size = 8;
+	// x_pos = 96;
+	// y_pos = 96;
 	img.mlx = mlx_init();
-	img.character = mlx_xpm_file_to_image(img.mlx, "imgs/movement-1.xpm", &a, &b);
-	img.win = mlx_new_window(img.mlx, 32 * 32, 32 * 32, "So_long");
-	put_surrounding(img.mlx, img.win, 32, 32);
-	mlx_put_image_to_window(img.mlx, img.win, img.character, 50, 50);
-	mlx_hook(img.win, 2, 1L<<0, close, &img);
+	img.character = mlx_xpm_file_to_image(img.mlx, "imgs/movement-1.xpm", &x_size, &y_size);
+	img.win = mlx_new_window(img.mlx, x * 64, y * 64, "So_long");
+	put_surrounding(img.mlx, img.win, x, y);
+	mlx_put_image_to_window(img.mlx, img.win, img.character, x, y);
+	mlx_hook(img.win, 2, 1L<<0, ft_close, &img);
+	mlx_hook(img.win, 17, 0L, ft_close_cross, &img);
 		mlx_loop(img.mlx);
 }
 
-int     main(void)
+int     main(int argc, char **argv)
 {
-	/*if (ac != 2)
-	  {
-	  write(1, "Input Error", 11);
-	  return (0);
-	  }*/
-	/*if (ft_checkfile(av[1]) == 0)
-	  {
-	  printf("(Input Errror : File is not a .ber)\n");
-	  return (0);
-	  }*/
-	init_img();
+	char	**map;
+	char	*str;
+	int	i;
+
+	i = 0;
+	map = ft_fill_map(argv[1]);
+	if(!ft_map_parse(map) || !ft_check_map_objects(map) || !ft_namecheck(argv[1]))
+		return (0);
+	init_img(map);
 }
