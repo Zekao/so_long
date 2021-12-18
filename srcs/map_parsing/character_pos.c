@@ -6,11 +6,11 @@
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:11:32 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/16 10:20:40 by emaugale         ###   ########.fr       */
+/*   Updated: 2021/12/18 02:17:08 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_get_character_x(char **map)
+int ft_get_stuff_x(char **map, char c)
 {
     int i;
     int j;
@@ -21,7 +21,7 @@ int ft_get_character_x(char **map)
         j = 0;
         while(map[i][j])
         {
-            if (map[i][j] == 'P')
+            if (map[i][j] == c)
                 return (j);
             j++;
         }
@@ -30,7 +30,7 @@ int ft_get_character_x(char **map)
     return (0);
 }
 
-int ft_get_character_y(char **map)
+int ft_get_stuff_y(char **map, char c)
 {
     int i;
     int j;
@@ -41,7 +41,7 @@ int ft_get_character_y(char **map)
         j = 0;
         while(map[i][j])
         {
-            if (map[i][j] == 'P')
+            if (map[i][j] == c)
                 return (i);
             j++;
         }

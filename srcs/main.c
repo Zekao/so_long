@@ -56,9 +56,6 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y)
 
 int	ft_close(int keycode, t_img *vars)
 {
-	x_size = ft_get_character_x(map);
-	y_size = ft_get_character_y(map);
-	
 	printf ("keycode : %d\n", keycode);
 	if (keycode == 53 || keycode < 0)
 	{
@@ -66,10 +63,64 @@ int	ft_close(int keycode, t_img *vars)
 		mlx_destroy_window(vars->mlx, vars->win);
 		exit(0);
 	}
+	return (0);
+}
+
+static void	ft_swap(char *a, char *b)
+{
+	char c;
+
+	c = *a;
+	*a = *b;
+	*b = c;
+}
+
+int	ft_move(int keycode, t_calculs *vars)
+{
+	int	x;
+	int y;
+
+	x = vars->x_size;
+	y = vars->y_size;
+	if (keycode == 0)
+	{
+		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
+		ft_swap(&vars->map[y][x - 1], &vars->map[y][x]);
+		vars->x_size = ft_get_stuff_x(vars->map, 'P');
+		vars->y_size = ft_get_stuff_y(vars->map, 'P');
+		vars->calc1 = (vars->x_size % vars->x * 64);
+		vars->calc2 = (vars->y_size % vars->y * 64);
+		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.character, vars->calc1, vars->calc2);
+	}
 	if (keycode == 2)
-	{	
-		mlx_destroy_image(vars->mlx, vars->character);
-		mlx_put_image_to_window(img.mlx, img.win, img.character, calc1++, calc2);
+	{
+		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
+		ft_swap(&vars->map[y][x + 1], &vars->map[y][x]);
+		vars->x_size = ft_get_stuff_x(vars->map, 'P');
+		vars->y_size = ft_get_stuff_y(vars->map, 'P');
+		vars->calc1 = (vars->x_size % vars->x * 64);
+		vars->calc2 = (vars->y_size % vars->y * 64);
+		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.character, vars->calc1, vars->calc2);
+	}
+	else if (keycode == 13)
+	{
+		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
+		ft_swap(&vars->map[y - 1][x], &vars->map[y][x]);
+		vars->x_size = ft_get_stuff_x(vars->map, 'P');
+		vars->y_size = ft_get_stuff_y(vars->map, 'P');
+		vars->calc1 = (vars->x_size % vars->x * 64);
+		vars->calc2 = (vars->y_size % vars->y * 64);
+		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.character, vars->calc1, vars->calc2);
+	}
+	else if (keycode == 1)
+	{
+		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
+		ft_swap(&vars->map[y + 1][x], &vars->map[y][x]);
+		vars->x_size = ft_get_stuff_x(vars->map, 'P');
+		vars->y_size = ft_get_stuff_y(vars->map, 'P');
+		vars->calc1 = (vars->x_size % vars->x * 64);
+		vars->calc2 = (vars->y_size % vars->y * 64);
+		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.character, vars->calc1, vars->calc2);
 	}
 	return (0);
 }
@@ -82,40 +133,45 @@ int	ft_close_cross(t_img *vars)
 	exit(0);
 }
 
-void    init_img(char **map)
+void    init_img(t_calculs *calc)
 {
-	int		x_size;
-	int		y_size;
-	int		x;
-	int		y;
-	t_img	img;
 
-	x = ft_strlen(map[1]);
-	y = ft_strstrsize(map);
-	x_size = ft_get_character_x(map);
-	y_size = ft_get_character_y(map);
+	calc->x = ft_strlen(calc->map[1]);
+	calc->y = ft_strstrsize(calc->map);
+	calc->x_size = ft_get_stuff_x(calc->map, 'P');
+	calc->y_size = ft_get_stuff_y(calc->map, 'P');
 
-	int	calc1 = (x_size % x * 64);
-	int	calc2 = (y_size % y * 64);
-	img.mlx = mlx_init();
-	img.character = mlx_xpm_file_to_image(img.mlx, "imgs/character.xpm", &x_size, &y_size);
-	img.win = mlx_new_window(img.mlx, x * 64, y * 64, "So_long");
-	put_surrounding(img.mlx, img.win, x, y);
-	mlx_put_image_to_window(img.mlx, img.win, img.character, calc1, calc2);
-	mlx_hook(img.win, 2, 1L<<0, ft_close, &img);
-	mlx_hook(img.win, 17, 0L, ft_close_cross, &img);
-		mlx_loop(img.mlx);
+	calc->calc1 = (calc->x_size % calc->x * 64);
+	calc->calc2 = (calc->y_size % calc->y * 64);
+	int	charsx = 0;
+	int	charsy = 0;
+	calc->img.mlx = mlx_init();
+	calc->img.grass = mlx_xpm_file_to_image(calc->img.mlx, "imgs/grass.xpm", &charsx, &charsy);
+	calc->img.character = mlx_xpm_file_to_image(calc->img.mlx, "imgs/character.xpm", &charsx, &charsy);
+	// calc->x_size = ft_get_stuff_x(calc->map, 'C');
+	// calc->y_size = ft_get_stuff_y(calc->map, 'C');
+	//calc->img.collectible = mlx_xpm_file_to_image(calc->img.mlx, "imgs/cloder-chest.xpm", &calc->x_size, &calc->y_size);
+	calc->img.win = mlx_new_window(calc->img.mlx, calc->x * 64, calc->y * 64, "so_long");
+	put_surrounding(calc->img.mlx, calc->img.win, calc->x, calc->y);
+	mlx_put_image_to_window(calc->img.mlx, calc->img.win, calc->img.character, calc->calc1, calc->calc2);
+	mlx_hook(calc->img.win, 2, 1L<<0, ft_close, &calc->img);
+	mlx_hook(calc->img.win, 17, 0L, ft_close_cross, &calc->img);
+	mlx_key_hook(calc->img.win, ft_move, calc);
+	printf("calc->>x : %d\n", calc->x_size);
+	printf("calc->>y : %d\n", calc->y_size);
+		mlx_loop(calc->img.mlx);
 }
 
 int     main(int argc, char **argv)
 {
-	char	**map;
+	t_calculs calc;
+
 	int	i;
 
 	(void)argc;
 	i = 0;
-	map = ft_fill_map(argv[1]);
-	if(!ft_map_parse(map) || !ft_check_map_objects(map) || !ft_namecheck(argv[1]))
+	calc.map = ft_fill_map(argv[1]);
+	if(!ft_map_parse(calc.map) || !ft_check_map_objects(calc.map) || !ft_namecheck(argv[1]))
 		return (0);
-	init_img(map);
+	init_img(&calc);
 }
