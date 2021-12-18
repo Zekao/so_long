@@ -13,6 +13,7 @@ SRCS =	srcs/main.c 								\
 		srcs/movement/movement_handler.c			\
 		srcs/movement/check_colision.c				\
 		srcs/collectible/collectible_replace.c		\
+		srcs/end/success.c							\
 		srcs/error.c								\
 
 MLX = /usr/local/lib/

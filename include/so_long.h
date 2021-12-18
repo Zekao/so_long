@@ -12,7 +12,6 @@ typedef	struct s_img
 	void	*character;
 	void	*collectible;
 	void	*grass;
-	void	*exit;
 }	t_img;
  
 typedef	struct s_maps
@@ -20,6 +19,7 @@ typedef	struct s_maps
 	void	*wall;
 	void	*bg;
 	void	*coll;
+	void	*exit;
 	int	collnbr;
 	int	collnbrmax;
 }			t_maps;
@@ -64,6 +64,8 @@ int ft_replace_collectible_right(t_calculs *vars, int x, int y);
 int ft_replace_collectible_left(t_calculs *vars, int x, int y);
 int ft_replace_collectible_up(t_calculs *vars, int x, int y);
 int ft_replace_collectible_down(t_calculs *vars, int x, int y);
+int ft_success(char *str);
+int ft_get_nbr(char **str, char c);
 
 /*												*/
 size_t	ft_strlen(char const *str);

@@ -26,6 +26,7 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y, char **maps)
 	map.wall = mlx_xpm_file_to_image(mlx, "imgs/wall.xpm", &a, &b);
 	map.bg = mlx_xpm_file_to_image(mlx, "imgs/grass.xpm", &a, &b);
 	map.coll = mlx_xpm_file_to_image(mlx, "imgs/closed-chest.xpm", &a, &b);
+	map.exit = mlx_xpm_file_to_image(mlx, "imgs/doudou.xpm", &a, &b);
 	map.collnbrmax = 0;
 	map.collnbr = 0;
 	while (++i < y) //GAUCHE ET DROITE
@@ -59,6 +60,8 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y, char **maps)
 				map.collnbrmax++;
 				mlx_put_image_to_window(mlx, mlx_win, map.coll, pix * f, pix * g);
 			}
+			if (maps[g][f] == 'E')
+				mlx_put_image_to_window(mlx, mlx_win, map.exit, pix * f, pix * g);
 			g++;
 		}
 		f++;
@@ -121,7 +124,7 @@ void    init_img(t_calculs *calc)
 	calc->y = ft_strstrsize(calc->map);
 	calc->x_size = ft_get_stuff_x(calc->map, 'P');
 	calc->y_size = ft_get_stuff_y(calc->map, 'P');
-
+	calc->stuff.collnbrmax = ft_get_nbr(calc->map, 'C');
 	calc->calc1 = (calc->x_size % calc->x * 64);
 	calc->calc2 = (calc->y_size % calc->y * 64);
 	int	charsx = 0;
