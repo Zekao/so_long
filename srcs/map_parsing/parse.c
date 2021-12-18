@@ -6,7 +6,7 @@
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 19:37:18 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/16 11:31:19 by emaugale         ###   ########.fr       */
+/*   Updated: 2021/12/18 18:27:23 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,3 @@ int	ft_map_parse(char **map)
 	}
 	return (1);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	char	**map;
-// 	char	*str;
-// 	int	i;
-
-// 	i = 0;
-// 	map = ft_fill_map(argv[1]);
-// 	if(!ft_map_parse(map) || !ft_check_map_objects(map) || !ft_namecheck(argv[1]))
-// 		return (0);
-// }

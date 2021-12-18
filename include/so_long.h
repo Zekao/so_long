@@ -9,7 +9,10 @@ typedef	struct s_img
 {
 	void	*mlx;
 	void	*win;
-	void	*character;
+	void	*left;
+	void	*right;
+	void	*up;
+	void	*down;
 	void	*collectible;
 	void	*grass;
 }	t_img;

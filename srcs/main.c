@@ -18,15 +18,15 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y, char **maps)
 	int     a;
 	int     b;
 	int     pix = 64;
-		t_maps	map;
+	t_maps	map;
 
 	a = 0;
 	b = 0;
 	i = -1;
 	map.wall = mlx_xpm_file_to_image(mlx, "imgs/wall.xpm", &a, &b);
 	map.bg = mlx_xpm_file_to_image(mlx, "imgs/grass.xpm", &a, &b);
-	map.coll = mlx_xpm_file_to_image(mlx, "imgs/closed-chest.xpm", &a, &b);
-	map.exit = mlx_xpm_file_to_image(mlx, "imgs/doudou.xpm", &a, &b);
+	map.coll = mlx_xpm_file_to_image(mlx, "imgs/collectible.xpm", &a, &b);
+	map.exit = mlx_xpm_file_to_image(mlx, "imgs/exit.xpm", &a, &b);
 	map.collnbrmax = 0;
 	map.collnbr = 0;
 	while (++i < y) //GAUCHE ET DROITE
@@ -70,10 +70,10 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y, char **maps)
 
 int	ft_close(int keycode, t_img *vars)
 {
-	printf ("keycode : %d\n", keycode);
+	// printf ("keycode : %d\n", keycode);
 	if (keycode == 53 || keycode < 0)
 	{
-		mlx_destroy_image(vars->mlx, vars->character);
+		// mlx_destroy_image(vars->mlx, vars->character);
 		mlx_destroy_window(vars->mlx, vars->win);
 		exit(0);
 	}
@@ -105,13 +105,12 @@ int	ft_move(int keycode, t_calculs *vars)
 		printf("number of movements : %d\n", ++move);
 	else if (keycode == 1 && movement_handler_down(vars, x, y) == 1)
 		printf("number of movements : %d\n", ++move);
-	printf("number of collectibles received : %d\n", vars->stuff.collnbr);
 	return (0);
 }
 
 int	ft_close_cross(t_img *vars)
 {
-	mlx_destroy_image(vars->mlx, vars->character);
+	// mlx_destroy_image(vars->mlx, vars->left);
 	mlx_destroy_window(vars->mlx, vars->win);
 	printf("you have clicked on the red cross.\n");
 	exit(0);
@@ -131,43 +130,27 @@ void    init_img(t_calculs *calc)
 	int	charsy = 0;
 	calc->img.mlx = mlx_init();
 	calc->img.grass = mlx_xpm_file_to_image(calc->img.mlx, "imgs/grass.xpm", &charsx, &charsy);
-	calc->img.character = mlx_xpm_file_to_image(calc->img.mlx, "imgs/character.xpm", &charsx, &charsy);
-	// calc->x_size = ft_get_stuff_x(calc->map, 'C');
-	// calc->y_size = ft_get_stuff_y(calc->map, 'C');
+	calc->img.left = mlx_xpm_file_to_image(calc->img.mlx, "imgs/left.xpm", &charsx, &charsy);
+	calc->img.right = mlx_xpm_file_to_image(calc->img.mlx, "imgs/right.xpm", &charsx, &charsy);
+	calc->img.up = mlx_xpm_file_to_image(calc->img.mlx, "imgs/back.xpm", &charsx, &charsy);
+	calc->img.down = mlx_xpm_file_to_image(calc->img.mlx, "imgs/front.xpm", &charsx, &charsy);
 	calc->img.win = mlx_new_window(calc->img.mlx, calc->x * 64, calc->y * 64, "so_long");
 	put_surrounding(calc->img.mlx, calc->img.win, calc->x, calc->y, calc->map);
-	mlx_put_image_to_window(calc->img.mlx, calc->img.win, calc->img.character, calc->calc1, calc->calc2);
+	mlx_put_image_to_window(calc->img.mlx, calc->img.win, calc->img.left, calc->calc1, calc->calc2);
 	mlx_hook(calc->img.win, 2, 1L<<0, ft_close, &calc->img);
 	mlx_hook(calc->img.win, 17, 0L, ft_close_cross, &calc->img);
 	mlx_key_hook(calc->img.win, ft_move, calc);
-	printf("calc->x : %d\n", calc->x_size);
-	printf("calc->y : %d\n", calc->y_size);
-		mlx_loop(calc->img.mlx);
+	mlx_loop(calc->img.mlx);
 }
 
 int     main(int argc, char **argv)
 {
 	t_calculs calc;
 
-	int	i;
-	int	j;
-
 	(void)argc;
-	i = 0;
 	calc.map = ft_fill_map(argv[1]);
 	if(!ft_map_parse(calc.map) || !ft_check_map_objects(calc.map) || !ft_namecheck(argv[1]))
 		return (0);
-	printf("\n=========    my map  :  ========\n");
-	while (calc.map[i])
-	{
-		j = 0;
-		while(calc.map[i][j])
-		{
-			printf("%c", calc.map[i][j]);
-			j++;
-		}
-		i++;
-	}
-	printf("\n=========    my map  :  ========\n");
 	init_img(&calc);
+	return (1);
 }
