@@ -6,7 +6,7 @@
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 19:37:18 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/18 18:27:23 by emaugale         ###   ########.fr       */
+/*   Updated: 2021/12/18 22:36:10 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,21 @@
 int	ft_strstrsize(char **str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i])
 		i++;
 	return (i);
 }
 
-static int ft_check_top_bottom(char **str)
+static int	ft_check_top_bottom(char **str)
 {
-	int	i;
+	int		i;
 	char	*last;
 	char	*first;
-	
+
 	first = str[0];
-	// printf("premiere ligne : %s\n", first);
 	last = str[ft_strstrsize(str) - 1];
-	// printf("derniere ligne : %s\n", last);
 	if (ft_strstrsize(str) - 1 < 1)
 		return (0);
 	i = 0;
@@ -62,7 +60,7 @@ static int	ft_check_line(char *str)
 	i++;
 	while (str[i + 1])
 	{
-		if (str[i] != '1' && str[i] != '0' && str[i] != 'C' 
+		if (str[i] != '1' && str[i] != '0' && str[i] != 'C'
 			&& str[i] != 'E' && str[i] != 'P')
 			return (0);
 		i++;
@@ -70,7 +68,6 @@ static int	ft_check_line(char *str)
 	if (str[i - 1] != '1')
 		return (0);
 	return (1);
-	
 }
 
 int	ft_map_parse(char **map)
@@ -79,9 +76,10 @@ int	ft_map_parse(char **map)
 
 	i = 0;
 	if (ft_check_top_bottom(map) == 0)
-		return (ft_error("Error : problem with the parsing of first/last line of the map.\n"));
+		return (ft_error
+			("Error : problem with the parsing of the map.\n"));
 	i++;
-	while(map[i])
+	while (map[i])
 	{
 		if (ft_check_line(map[i]) == 0)
 			return (ft_error("Error : prolem with the parsing of the map.\n"));

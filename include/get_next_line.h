@@ -6,12 +6,13 @@
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 17:23:14 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/16 01:55:00 by emaugale         ###   ########.fr       */
+/*   Updated: 2021/12/18 22:09:43 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+# define BUFFER_SIZE 2048
 
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -21,10 +22,6 @@
 # include <unistd.h>
 # include <stddef.h>
 # include <string.h>
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 2048
-#endif
 
 size_t	ft_strlen(char const *str);
 char	*ft_check(char *memory, int fd);

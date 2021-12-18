@@ -15,6 +15,7 @@ SRCS =	srcs/main.c 								\
 		srcs/collectible/collectible_replace.c		\
 		srcs/end/success.c							\
 		srcs/error.c								\
+		srcs/putimg.c								\
 
 MLX = /usr/local/lib/
 

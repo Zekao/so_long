@@ -6,29 +6,29 @@
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 01:23:24 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/18 03:56:24 by emaugale         ###   ########.fr       */
+/*   Updated: 2021/12/18 22:26:30 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 #include "../include/get_next_line.h"
 
-static int ft_count_size(char *argv)
+static int	ft_count_size(char *argv)
 {
-    char *str;
-    int i;
-    int fd;
+	char	*str;
+	int		i;
+	int		fd;
 
-    i = 0;
+	i = 0;
 	fd = open(argv, O_RDONLY);
-    str = get_next_line(fd);
+	str = get_next_line(fd);
 	while (str)
 	{
 		free(str);
 		i++;
-		str = get_next_line(fd);	
+		str = get_next_line(fd);
 	}
-    free(str);
+	free(str);
 	close(fd);
 	return (i);
 }
@@ -40,13 +40,13 @@ char	**ft_fill_map(char *argv)
 	int		i;
 	int		fd;
 	int		size;
-	
+
 	size = ft_count_size(argv);
 	i = 0;
 	fd = open(argv, O_RDONLY);
 	map = malloc(sizeof(char *) * (size + 1));
 	str = get_next_line(fd);
-	while(str)
+	while (str)
 	{
 		map[i] = str;
 		str = get_next_line(fd);

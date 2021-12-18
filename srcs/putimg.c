@@ -1,51 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   character_pos.c                                    :+:      :+:    :+:   */
+/*   putimg.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 10:11:32 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/18 22:24:14 by emaugale         ###   ########.fr       */
+/*   Created: 2021/12/18 23:20:45 by emaugale          #+#    #+#             */
+/*   Updated: 2021/12/18 23:58:21 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_get_stuff_x(char **map, char c)
+#include "so_long.h"
+
+void	*ft_put_img(t_calculs *calc, char *path)
 {
-	int	i;
-	int	j;
+	int	a;
+	int	b;
 
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == c)
-				return (j);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	ft_get_stuff_y(char **map, char c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == c)
-				return (i);
-			j++;
-		}
-		i++;
-	}
-	return (0);
+	a = 0;
+	b = 0;
+	return (mlx_xpm_file_to_image(calc->img.mlx, path, &a, &b));
 }
