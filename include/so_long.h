@@ -20,6 +20,8 @@ typedef	struct s_maps
 	void	*wall;
 	void	*bg;
 	void	*coll;
+	int	collnbr;
+	int	collnbrmax;
 }			t_maps;
 
 typedef struct s_calculs
@@ -30,8 +32,10 @@ typedef struct s_calculs
 	int	y_size;
 	int	calc1; // x
 	int	calc2; // y
+	int	move;
 	char **map;
 	t_img img;
+	t_maps stuff;
 }		t_calculs;
 
 /*	My functions to check the content of my map */
@@ -53,6 +57,13 @@ int movement_handler_down(t_calculs *vars, int x, int y);
 
 /* check if i can do my mouvement */
 int ft_check_collision(int current, int next);
+/*												*/
+
+/* Stuff for my collectibles */
+int ft_replace_collectible_right(t_calculs *vars, int x, int y);
+int ft_replace_collectible_left(t_calculs *vars, int x, int y);
+int ft_replace_collectible_up(t_calculs *vars, int x, int y);
+int ft_replace_collectible_down(t_calculs *vars, int x, int y);
 
 /*												*/
 size_t	ft_strlen(char const *str);

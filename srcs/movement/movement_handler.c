@@ -6,16 +6,21 @@
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:08:42 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/18 03:14:40 by emaugale         ###   ########.fr       */
+/*   Updated: 2021/12/18 05:59:42 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-int movement_handler_right(t_calculs *vars, int x, int y)
+int movement_handler_left(t_calculs *vars, int x, int y)
 {
 	if (ft_check_collision(vars->map[y][x], vars->map[y][x - 1]) == 0)
 		return (0);
+	else if (ft_check_collision(vars->map[y][x], vars->map[y][x - 1]) == 2)
+	{
+		ft_replace_collectible_left(vars, x, y);
+		vars->stuff.collnbr++;
+	}
 	mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
 	ft_swap(&vars->map[y][x - 1], &vars->map[y][x]);
 	vars->x_size = ft_get_stuff_x(vars->map, 'P');
@@ -25,12 +30,19 @@ int movement_handler_right(t_calculs *vars, int x, int y)
 	mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.character, vars->calc1, vars->calc2);
 	return (1);
 }
-int movement_handler_left(t_calculs *vars, int x, int y)
+int movement_handler_right(t_calculs *vars, int x, int y)
 {
 	if (ft_check_collision(vars->map[y][x], vars->map[y][x + 1]) == 0)
 		return (0);
-	mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
-	ft_swap(&vars->map[y][x + 1], &vars->map[y][x]);
+	else if (ft_check_collision(vars->map[y][x], vars->map[y][x + 1]) == 2)
+	{
+		ft_replace_collectible_right(vars, x, y);
+		vars->stuff.collnbr++;
+	}
+	else 
+		ft_swap(&vars->map[y][x + 1], &vars->map[y][x]);
+	mlx_put_image_to_window(vars->img.mlx, vars->img.win, 
+		vars->img.grass, vars->calc1, vars->calc2);
 	vars->x_size = ft_get_stuff_x(vars->map, 'P');
 	vars->y_size = ft_get_stuff_y(vars->map, 'P');
 	vars->calc1 = (vars->x_size % vars->x * 64);
@@ -43,6 +55,11 @@ int movement_handler_up(t_calculs *vars, int x, int y)
 {
 	if (ft_check_collision(vars->map[y][x], vars->map[y - 1][x]) == 0)
 		return (0);
+	else if (ft_check_collision(vars->map[y][x], vars->map[y - 1][x]) == 2)
+	{
+		ft_replace_collectible_up(vars, x, y);
+		vars->stuff.collnbr++;
+	}
 	mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
 	ft_swap(&vars->map[y - 1][x], &vars->map[y][x]);
 	vars->x_size = ft_get_stuff_x(vars->map, 'P');
@@ -57,6 +74,11 @@ int movement_handler_down(t_calculs *vars, int x, int y)
 {
 	if (ft_check_collision(vars->map[y + 1][x], vars->map[y][x]) == 0)
 		return (0);
+	else if (ft_check_collision(vars->map[y][x], vars->map[y + 1][x]) == 2)
+	{
+		ft_replace_collectible_down(vars, x, y);
+		vars->stuff.collnbr++;
+	}
 	mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
 	ft_swap(&vars->map[y + 1][x], &vars->map[y][x]);
 	vars->x_size = ft_get_stuff_x(vars->map, 'P');

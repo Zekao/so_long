@@ -12,6 +12,7 @@ SRCS =	srcs/main.c 								\
 		srcs/map_parsing/parse_utils.c				\
 		srcs/movement/movement_handler.c			\
 		srcs/movement/check_colision.c				\
+		srcs/collectible/collectible_replace.c		\
 		srcs/error.c								\
 
 MLX = /usr/local/lib/

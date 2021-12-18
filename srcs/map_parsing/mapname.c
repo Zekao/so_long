@@ -6,7 +6,7 @@
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 05:46:46 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/16 05:51:11 by emaugale         ###   ########.fr       */
+/*   Updated: 2021/12/18 05:03:21 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int ft_namecheck(char *file)
 	while (file[i])
 		i++;
 	i--;
-	if (file[i] != 'r' && file[i - 1] != 'e' &&
-			file[i - 2] != 'b' && file[i - 3] != '.')
-		return (ft_error("Error : Problem witht the map name"));
+	if ((file[i] != 'r' && file[i - 1] != 'e' &&
+			file[i - 2] != 'b' && file[i - 3] != '.') || ft_strlen(file) < 4)
+		return (ft_error("Error : Problem with the map name"));
 	return (1);		
 }

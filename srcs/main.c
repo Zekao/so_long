@@ -26,6 +26,8 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y, char **maps)
 	map.wall = mlx_xpm_file_to_image(mlx, "imgs/wall.xpm", &a, &b);
 	map.bg = mlx_xpm_file_to_image(mlx, "imgs/grass.xpm", &a, &b);
 	map.coll = mlx_xpm_file_to_image(mlx, "imgs/closed-chest.xpm", &a, &b);
+	map.collnbrmax = 0;
+	map.collnbr = 0;
 	while (++i < y) //GAUCHE ET DROITE
 	{
 		mlx_put_image_to_window(mlx, mlx_win, map.wall, 0, pix * i);//cote gauche
@@ -53,8 +55,10 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y, char **maps)
 			else if (maps[g][f] != '1')
 				mlx_put_image_to_window(mlx, mlx_win, map.bg, pix * f, pix * g);
 			if (maps[g][f] == 'C')
+			{
+				map.collnbrmax++;
 				mlx_put_image_to_window(mlx, mlx_win, map.coll, pix * f, pix * g);
-			printf("valeur de g : %d\n", g);
+			}
 			g++;
 		}
 		f++;
@@ -86,17 +90,19 @@ int	ft_move(int keycode, t_calculs *vars)
 {
 	int	x;
 	int y;
+	static int move = 0;
 
 	x = vars->x_size;
 	y = vars->y_size;
-	if (keycode == 0)
-		movement_handler_right(vars, x, y);
-	else if (keycode == 2)
-		movement_handler_left(vars, x, y);
-	else if (keycode == 13)
-		movement_handler_up(vars, x, y);
-	else if (keycode == 1)
-		movement_handler_down(vars, x, y);
+	if (keycode == 0 && movement_handler_left(vars, x, y) == 1)
+		printf("number of movements : %d\n", ++move);
+	else if (keycode == 2 && movement_handler_right(vars, x, y) == 1)
+		printf("number of movements : %d\n", ++move);
+	else if (keycode == 13 && movement_handler_up(vars, x, y) == 1)
+		printf("number of movements : %d\n", ++move);
+	else if (keycode == 1 && movement_handler_down(vars, x, y) == 1)
+		printf("number of movements : %d\n", ++move);
+	printf("number of collectibles received : %d\n", vars->stuff.collnbr);
 	return (0);
 }
 
