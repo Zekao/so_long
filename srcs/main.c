@@ -12,7 +12,7 @@
 
 #include "../include/so_long.h"
 
-void    put_surrounding(void *mlx, void *mlx_win, int x, int y)
+void    put_surrounding(void *mlx, void *mlx_win, int x, int y, char **maps)
 {
 	int     i;
 	int     a;
@@ -25,6 +25,7 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y)
 	i = -1;
 	map.wall = mlx_xpm_file_to_image(mlx, "imgs/wall.xpm", &a, &b);
 	map.bg = mlx_xpm_file_to_image(mlx, "imgs/grass.xpm", &a, &b);
+	map.coll = mlx_xpm_file_to_image(mlx, "imgs/closed-chest.xpm", &a, &b);
 	while (++i < y) //GAUCHE ET DROITE
 	{
 		mlx_put_image_to_window(mlx, mlx_win, map.wall, 0, pix * i);//cote gauche
@@ -47,7 +48,13 @@ void    put_surrounding(void *mlx, void *mlx_win, int x, int y)
 		g = 1;
 		while (g < y - 1)
 		{
-			mlx_put_image_to_window(mlx, mlx_win, map.bg, pix * f, pix * g);
+			if (maps[g][f] == '1')
+				mlx_put_image_to_window(mlx, mlx_win, map.wall, pix * f, pix * g);
+			else if (maps[g][f] != '1')
+				mlx_put_image_to_window(mlx, mlx_win, map.bg, pix * f, pix * g);
+			if (maps[g][f] == 'C')
+				mlx_put_image_to_window(mlx, mlx_win, map.coll, pix * f, pix * g);
+			printf("valeur de g : %d\n", g);
 			g++;
 		}
 		f++;
@@ -104,7 +111,7 @@ int	ft_close_cross(t_img *vars)
 void    init_img(t_calculs *calc)
 {
 
-	calc->x = ft_strlen(calc->map[1]);
+	calc->x = ft_strlen(calc->map[1]) - 1;
 	calc->y = ft_strstrsize(calc->map);
 	calc->x_size = ft_get_stuff_x(calc->map, 'P');
 	calc->y_size = ft_get_stuff_y(calc->map, 'P');
@@ -118,15 +125,14 @@ void    init_img(t_calculs *calc)
 	calc->img.character = mlx_xpm_file_to_image(calc->img.mlx, "imgs/character.xpm", &charsx, &charsy);
 	// calc->x_size = ft_get_stuff_x(calc->map, 'C');
 	// calc->y_size = ft_get_stuff_y(calc->map, 'C');
-	//calc->img.collectible = mlx_xpm_file_to_image(calc->img.mlx, "imgs/cloder-chest.xpm", &calc->x_size, &calc->y_size);
 	calc->img.win = mlx_new_window(calc->img.mlx, calc->x * 64, calc->y * 64, "so_long");
-	put_surrounding(calc->img.mlx, calc->img.win, calc->x, calc->y);
+	put_surrounding(calc->img.mlx, calc->img.win, calc->x, calc->y, calc->map);
 	mlx_put_image_to_window(calc->img.mlx, calc->img.win, calc->img.character, calc->calc1, calc->calc2);
 	mlx_hook(calc->img.win, 2, 1L<<0, ft_close, &calc->img);
 	mlx_hook(calc->img.win, 17, 0L, ft_close_cross, &calc->img);
 	mlx_key_hook(calc->img.win, ft_move, calc);
-	printf("calc->>x : %d\n", calc->x_size);
-	printf("calc->>y : %d\n", calc->y_size);
+	printf("calc->x : %d\n", calc->x_size);
+	printf("calc->y : %d\n", calc->y_size);
 		mlx_loop(calc->img.mlx);
 }
 
@@ -135,11 +141,24 @@ int     main(int argc, char **argv)
 	t_calculs calc;
 
 	int	i;
+	int	j;
 
 	(void)argc;
 	i = 0;
 	calc.map = ft_fill_map(argv[1]);
 	if(!ft_map_parse(calc.map) || !ft_check_map_objects(calc.map) || !ft_namecheck(argv[1]))
 		return (0);
+	printf("\n=========    my map  :  ========\n");
+	while (calc.map[i])
+	{
+		j = 0;
+		while(calc.map[i][j])
+		{
+			printf("%c", calc.map[i][j]);
+			j++;
+		}
+		i++;
+	}
+	printf("\n=========    my map  :  ========\n");
 	init_img(&calc);
 }

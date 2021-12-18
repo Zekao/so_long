@@ -19,6 +19,7 @@ typedef	struct s_maps
 {
 	void	*wall;
 	void	*bg;
+	void	*coll;
 }			t_maps;
 
 typedef struct s_calculs
