@@ -66,7 +66,7 @@ int	ft_close(int keycode, t_img *vars)
 	return (0);
 }
 
-static void	ft_swap(char *a, char *b)
+void	ft_swap(char *a, char *b)
 {
 	char c;
 
@@ -83,45 +83,13 @@ int	ft_move(int keycode, t_calculs *vars)
 	x = vars->x_size;
 	y = vars->y_size;
 	if (keycode == 0)
-	{
-		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
-		ft_swap(&vars->map[y][x - 1], &vars->map[y][x]);
-		vars->x_size = ft_get_stuff_x(vars->map, 'P');
-		vars->y_size = ft_get_stuff_y(vars->map, 'P');
-		vars->calc1 = (vars->x_size % vars->x * 64);
-		vars->calc2 = (vars->y_size % vars->y * 64);
-		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.character, vars->calc1, vars->calc2);
-	}
-	if (keycode == 2)
-	{
-		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
-		ft_swap(&vars->map[y][x + 1], &vars->map[y][x]);
-		vars->x_size = ft_get_stuff_x(vars->map, 'P');
-		vars->y_size = ft_get_stuff_y(vars->map, 'P');
-		vars->calc1 = (vars->x_size % vars->x * 64);
-		vars->calc2 = (vars->y_size % vars->y * 64);
-		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.character, vars->calc1, vars->calc2);
-	}
+		movement_handler_right(vars, x, y);
+	else if (keycode == 2)
+		movement_handler_left(vars, x, y);
 	else if (keycode == 13)
-	{
-		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
-		ft_swap(&vars->map[y - 1][x], &vars->map[y][x]);
-		vars->x_size = ft_get_stuff_x(vars->map, 'P');
-		vars->y_size = ft_get_stuff_y(vars->map, 'P');
-		vars->calc1 = (vars->x_size % vars->x * 64);
-		vars->calc2 = (vars->y_size % vars->y * 64);
-		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.character, vars->calc1, vars->calc2);
-	}
+		movement_handler_up(vars, x, y);
 	else if (keycode == 1)
-	{
-		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.grass, vars->calc1, vars->calc2);
-		ft_swap(&vars->map[y + 1][x], &vars->map[y][x]);
-		vars->x_size = ft_get_stuff_x(vars->map, 'P');
-		vars->y_size = ft_get_stuff_y(vars->map, 'P');
-		vars->calc1 = (vars->x_size % vars->x * 64);
-		vars->calc2 = (vars->y_size % vars->y * 64);
-		mlx_put_image_to_window(vars->img.mlx, vars->img.win, vars->img.character, vars->calc1, vars->calc2);
-	}
+		movement_handler_down(vars, x, y);
 	return (0);
 }
 

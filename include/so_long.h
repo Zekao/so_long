@@ -43,6 +43,17 @@ char	**ft_fill_map(char *argv);
 int 	ft_get_stuff_x(char **map, char c);
 int 	ft_get_stuff_y(char **map, char c);
 int		ft_map_parse(char **map);
+
+/* My functions to move on my map */
+int movement_handler_right(t_calculs *vars, int x, int y);
+int movement_handler_left(t_calculs *vars, int x, int y);
+int movement_handler_up(t_calculs *vars, int x, int y);
+int movement_handler_down(t_calculs *vars, int x, int y);
+
+/* check if i can do my mouvement */
+int ft_check_collision(int current, int next);
+
 /*												*/
 size_t	ft_strlen(char const *str);
+void	ft_swap(char *a, char *b);
 #endif
