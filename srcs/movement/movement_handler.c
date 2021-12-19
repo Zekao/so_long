@@ -6,7 +6,7 @@
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:08:42 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/18 22:20:19 by emaugale         ###   ########.fr       */
+/*   Updated: 2021/12/19 03:20:19 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	movement_handler_left(t_calculs *vars, int x, int y)
 	{
 		if (vars->stuff.collnbr == vars->stuff.collnbrmax)
 			ft_success("congratulations, you won. now you can go to sleep");
+		return (0);
 	}
 	else
 		ft_swap(&vars->map[y][x - 1], &vars->map[y][x]);
@@ -52,6 +53,8 @@ int	movement_handler_right(t_calculs *vars, int x, int y)
 	{
 		if (vars->stuff.collnbr == vars->stuff.collnbrmax)
 			ft_success("congratulations, you won. now you can go to sleep");
+		printf("You need to get all potions\n");
+		return (0);
 	}
 	else
 		ft_swap(&vars->map[y][x + 1], &vars->map[y][x]);
@@ -79,6 +82,7 @@ int	movement_handler_up(t_calculs *vars, int x, int y)
 	{
 		if (vars->stuff.collnbr == vars->stuff.collnbrmax)
 			ft_success("congratulations, you won. now you can go to sleep");
+		return (0);
 	}
 	else
 		ft_swap(&vars->map[y - 1][x], &vars->map[y][x]);
@@ -106,6 +110,7 @@ int	movement_handler_down(t_calculs *vars, int x, int y)
 	{
 		if (vars->stuff.collnbr == vars->stuff.collnbrmax)
 			ft_success("congratulations, you won. now you can go to sleep");
+		return (0);
 	}
 	else
 		ft_swap(&vars->map[y + 1][x], &vars->map[y][x]);

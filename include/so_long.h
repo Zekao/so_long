@@ -88,5 +88,12 @@ size_t	ft_strlen(char const *str);
 void	ft_swap(char *a, char *b);
 char	*ft_itoa(int nbr);
 void	*ft_put_img(t_calculs *calc, char *path);
+int		ft_move(int keycode, t_calculs *vars);
+void	*init_stuff(t_calculs *calc);
+void	init_img(t_calculs *calc);
+int		ft_close(int keycode, t_img *vars);
+int		ft_close_cross(t_img *vars);
+void	put_surrounding(t_calculs *mlx, int x, int y, char **maps);
+void    put_surrounding2(t_calculs *mlx, int x, int y, char **maps);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: emaugale <emaugale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 05:39:03 by emaugale          #+#    #+#             */
-/*   Updated: 2021/12/18 22:17:14 by emaugale         ###   ########.fr       */
+/*   Updated: 2021/12/19 03:26:00 by emaugale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,33 @@ char	*ft_itoa(int nbr)
 		size--;
 	}
 	return (str);
+}
+
+int	ft_move(int keycode, t_calculs *vars)
+{
+	int			x;
+	int			y;
+	char		*move_number;
+	static int	move = 0;
+
+	x = vars->x_size;
+	y = vars->y_size;
+	if (keycode == 0 && movement_handler_left(vars, x, y) == 1)
+		printf("number of movements : %d\n", ++move);
+	else if (keycode == 2 && movement_handler_right(vars, x, y) == 1)
+		printf("number of movements : %d\n", ++move);
+	else if (keycode == 13 && movement_handler_up(vars, x, y) == 1)
+		printf("number of movements : %d\n", ++move);
+	else if (keycode == 1 && movement_handler_down(vars, x, y) == 1)
+		printf("number of movements : %d\n", ++move);
+	mlx_put_image_to_window(vars->img.mlx, vars->img.win,
+		vars->img.wall, 0, 0);
+	move_number = ft_itoa(move);
+	if (move_number != NULL)
+	{
+		mlx_string_put(vars->img.mlx, vars->img.win, 26, 18,
+			0x00313500, move_number);
+	}
+	free(move_number);
+	return (0);
 }

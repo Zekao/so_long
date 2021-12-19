@@ -3,6 +3,8 @@ NAME =	so_long
 INC =	include
 
 SRCS =	srcs/main.c 								\
+		srcs/main2.c								\
+		srcs/main_utils.c							\
 		srcs/map_parsing/get_next_line_utils.c		\
 		srcs/map_parsing/get_next_line.c			\
 		srcs/map_parsing/mapname.c 					\
@@ -40,7 +42,6 @@ clean :
 	$(RM) $(OBJS)
 
 fclean : clean
-	-make clean 
 	$(RM) $(NAME)
 
 re : fclean all
