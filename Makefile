@@ -19,9 +19,27 @@ SRCS =	srcs/main.c 								\
 		srcs/error.c								\
 		srcs/putimg.c								\
 
+SRCS_BONUS =	srcs_bonus/main.c 								\
+		srcs_bonus/main2.c										\
+		srcs_bonus/main_utils.c									\
+		srcs_bonus/map_parsing/get_next_line_utils.c			\
+		srcs_bonus/map_parsing/get_next_line.c					\
+		srcs_bonus/map_parsing/mapname.c 						\
+		srcs_bonus/map_parsing/parse_content.c					\
+		srcs_bonus/map_parsing/character_pos.c					\
+		srcs_bonus/map_parsing/parse.c							\
+		srcs_bonus/map_parsing/parse_utils.c					\
+		srcs_bonus/movement/movement_handler.c					\
+		srcs_bonus/movement/check_colision.c					\
+		srcs_bonus/collectible/collectible_replace.c			\
+		srcs_bonus/end/success.c								\
+		srcs_bonus/error.c										\
+		srcs_bonus/putimg.c										\
+
 MLX = /usr/local/lib/
 
 OBJS = ${SRCS:.c=.o}
+OBJS_BONUS = ${SRCS_BONUS:.c=.o}
 
 CC = gcc
 
@@ -40,10 +58,12 @@ $(NAME) : $(OBJS)
 
 clean :
 	$(RM) $(OBJS)
+	$(RM) $(OBJS_BONUS)
 
 fclean : clean
 	$(RM) $(NAME)
 
 re : fclean all
 
-bonus : all
+bonus : $(OBJS_BONUS)
+	$(CC) $(OBJS_BONUS) $(FLAGS_MLX) -o $(NAME)
