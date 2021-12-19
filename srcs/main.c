@@ -34,20 +34,20 @@ void	put_surrounding(t_calculs *mlx, int x, int y, char **maps)
 		mlx_put_image_to_window(mlx->img.mlx, mlx->img.win,
 			mlx->stuff.wall, (x - 1) * 64, 64 * i);
 	}
-    put_surrounding2(mlx, x, y, maps);
+	put_surrounding2(mlx, x, y, maps);
 }
 
-static void n(t_calculs *m, void *p, int f, int g)
+static void	n(t_calculs *m, void *p, int f, int g)
 {
-    mlx_put_image_to_window(m->img.mlx, m->img.win, p, 64 * f, 64 * g);
+	mlx_put_image_to_window(m->img.mlx, m->img.win, p, 64 * f, 64 * g);
 }
 
-static void put_surroundings3(t_calculs *mlx, int x, int y, char **maps)
+static void	put_surroundings3(t_calculs *mlx, int x, int y, char **maps)
 {
-    int f;
-    int g;
+	int	f;
+	int	g;
 
-    f = 1;
+	f = 1;
 	while (f < x - 1)
 	{
 		g = 1;
@@ -70,9 +70,9 @@ static void put_surroundings3(t_calculs *mlx, int x, int y, char **maps)
 	}
 }
 
-void    put_surrounding2(t_calculs *mlx, int x, int y, char **maps)
+void	put_surrounding2(t_calculs *mlx, int x, int y, char **maps)
 {
-    int	j;
+	int	j;
 
 	j = -1;
 	while (++j < x)
@@ -80,7 +80,7 @@ void    put_surrounding2(t_calculs *mlx, int x, int y, char **maps)
 		n(mlx, mlx->stuff.wall, j, 0);
 		n(mlx, mlx->stuff.wall, j, (y - 1));
 	}
-    put_surroundings3(mlx, x, y, maps);
+	put_surroundings3(mlx, x, y, maps);
 }
 
 int	main(int argc, char **argv)

@@ -94,6 +94,6 @@ void	init_img(t_calculs *calc);
 int		ft_close(int keycode, t_img *vars);
 int		ft_close_cross(t_img *vars);
 void	put_surrounding(t_calculs *mlx, int x, int y, char **maps);
-void    put_surrounding2(t_calculs *mlx, int x, int y, char **maps);
+void	put_surrounding2(t_calculs *mlx, int x, int y, char **maps);
 
 #endif
